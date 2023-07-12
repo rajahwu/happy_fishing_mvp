@@ -6,7 +6,9 @@ export default function MapWidget() {
     queryFn: () =>
       fetch(
         "https://api.mapbox.com/styles/v1/mapbox/streets-v11/static/-122.3601,37.8312,9.43,0/300x200?access_token=pk.eyJ1IjoicmFqYWh3dSIsImEiOiJjbGp2a2h3aDUxYzhmM2xwYXIydHV5czlnIn0.MGF0sZl0Ko1M8ajsT6WocA"
-      )
+      ),
+      refetchOnWindowFocus: false,
+      staleTime: 300000
   });
 
   if (isLoading) return "Loading ...";

@@ -7,6 +7,8 @@ export default function WeatherWidget() {
       fetch(
         "http://api.weatherapi.com/v1/current.json?key=33e451fd8af640229f9212959230407&q=39.69616,-74.84490&aqi=no"
       ).then((res) => res.json()),
+      refetchOnWindowFocus: false,
+      staleTime: 300000
   });
 
   if (isLoading) return "Loading ...";
@@ -17,7 +19,7 @@ export default function WeatherWidget() {
   const location = data["location"];
 
   // console.log(currentWeather);
-  console.log(location);
+  // console.log(location);
   return (
     <div
       style={{

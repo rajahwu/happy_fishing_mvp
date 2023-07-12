@@ -13,6 +13,8 @@ export default function UserRecord() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["tripData"],
     queryFn: () => fetch("/api/trips").then((res) => res.json()),
+    refetchOnWindowFocus: false,
+    staleTime: 300000
   });
 
   if (isLoading) return "Loading ...";

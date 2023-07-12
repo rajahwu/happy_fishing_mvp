@@ -4,7 +4,12 @@ import { useState } from "react";
 
 const Boards = () => <h1>Boards</h1>;
 
-const Chat = () => <h1>Chat</h1>;
+const Chat = ({users}) => (
+<>
+<h1>Chat</h1>
+{users.map((user, i) => <div key={i}>{user.username}</div>)}
+</>
+);
 
 const UserChatProfile = ({ username }) => (
   <>
@@ -14,10 +19,10 @@ const UserChatProfile = ({ username }) => (
   </>
 );
 
-const ShowActiveConvo = ({isActive, username}) => {
+const ShowActiveConvo = ({isActive, users}) => {
    if(isActive === "boards") return <Boards />
-   if(isActive === "chat") return <Chat />
-   if(isActive === username) return <UserChatProfile  username={username}/>
+   if(isActive === "chat") return <Chat users={users} />
+  //  if(isActive === users) return <UserChatProfile  username={username}/>S
 
 }
 
@@ -26,6 +31,8 @@ export default function MessagesPage() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["user"],
     queryFn: () => fetch("/api/test").then((res) => res.json()),
+    refetchOnWindowFocus: false,
+    staleTime: 300000
   });
 
   if (isLoading) return "Loading ...";
@@ -138,8 +145,7 @@ export default function MessagesPage() {
                 backgroundColor: "yellow",
               }}
             >
-              {isActive === "boards" ? <Boards /> : <Chat />}
-              Convs
+              <ShowActiveConvo isActive={isActive} users={users} />
             </div>
           </div>
         </div>

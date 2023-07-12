@@ -11,7 +11,9 @@ import HomePageCss from "./homePage.module.css";
 export default function HomePage() {
   const title = useQuery({
     queryKey: ["title"],
-    queryFn: () => fetch("/api").then(res => console.log(res))
+    queryFn: () => fetch("/api").then(res => console.log(res)),
+    refetchOnWindowFocus: false,
+    staleTime: 300000
   });
 
   console.log(title);

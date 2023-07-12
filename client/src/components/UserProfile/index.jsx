@@ -6,6 +6,8 @@ export default function UserProfile() {
   const { isLoading, error, data } = useQuery({
     queryKey: ["user"],
     queryFn: () => fetch("/api/test").then((res) => res.json()),
+    refetchOnWindowFocus: false,
+    staleTime: 300000
   });
 
   if (isLoading) return "Loading ...";
