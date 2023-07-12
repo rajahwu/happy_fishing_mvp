@@ -26,6 +26,10 @@ app.get('/api/test', (req, res) => __awaiter(void 0, void 0, void 0, function* (
     console.log('api/test');
     res.json(user);
 }));
+app.get('/api/users', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield prisma.user.findMany();
+    res.json(users);
+}));
 app.get('/api/trips', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const trips = yield prisma.trip.findMany({
         include: {

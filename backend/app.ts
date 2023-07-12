@@ -17,6 +17,11 @@ app.get('/api/test', async (req: Request, res: Response) => {
     res.json(user)
 })
 
+app.get('/api/users', async (req: Request, res: Response) => {
+    const users = await prisma.user.findMany()
+    res.json(users) 
+})
+
 app.get('/api/trips', async (req: Request, res: Response) => {
     const trips = await prisma.trip.findMany({
         include: {
