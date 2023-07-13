@@ -6,27 +6,27 @@ const app: Express = express()
 const port: number = 8000
 
 app.use(express.json())
+
 /**
  * @category Test API
  * @param route /api
  * @returns Object {title: "home"}
  */
-
 app.get('/api', (req: Request, res: Response) => {
-    res.json({ title: "home" })
+    return res.json({ title: "home" })
 })
 
 app.get('/api/test', async (req: Request, res: Response) => {
     const user = await prisma.user.findUnique({
-        where: { id:1 }
+        where: { id: 1 }
     })
     console.log('api/test')
-    res.json(user)
+    return res.json(user)
 })
 
 app.get('/api/users', async (req: Request, res: Response) => {
     const users = await prisma.user.findMany()
-    res.json(users) 
+    return res.json(users)
 })
 
 app.get('/api/trips', async (req: Request, res: Response) => {
@@ -60,7 +60,7 @@ app.get('/api/trips', async (req: Request, res: Response) => {
         }
     })
 
-    res.json(trips)
+    return res.json(trips)
 })
 
 app.listen(port, () => {

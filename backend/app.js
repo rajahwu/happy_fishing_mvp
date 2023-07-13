@@ -24,18 +24,18 @@ app.use(express_1.default.json());
  * @returns Object {title: "home"}
  */
 app.get('/api', (req, res) => {
-    res.json({ title: "home" });
+    return res.json({ title: "home" });
 });
 app.get('/api/test', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield prisma.user.findUnique({
         where: { id: 1 }
     });
     console.log('api/test');
-    res.json(user);
+    return res.json(user);
 }));
 app.get('/api/users', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield prisma.user.findMany();
-    res.json(users);
+    return res.json(users);
 }));
 app.get('/api/trips', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const trips = yield prisma.trip.findMany({
@@ -66,7 +66,7 @@ app.get('/api/trips', (req, res) => __awaiter(void 0, void 0, void 0, function* 
             },
         }
     });
-    res.json(trips);
+    return res.json(trips);
 }));
 app.listen(port, () => {
     console.log(`App is listening on port ${port}`);

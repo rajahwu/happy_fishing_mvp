@@ -23,16 +23,44 @@ const Chat = ({ users }) => (
 );
 
 const UserChatProfile = ({ username }) => (
-  <div
+  <li
     style={{
-      display: "flex",
-      marginTop: "15px",
+      padding: "15px",
+      margin: 0,
+      border: "3px solid black",
     }}
   >
-    {/* <p>Message to {username}</p> */}
-    <textarea placeholder={`write message for ${username}`} />
-    <button>Send</button>
-  </div>
+    <div
+      style={{
+        width: "25px",
+        height: "25px",
+        borderRadius: "50%",
+        backgroundColor: "black",
+        display: "inline-block",
+        color: "white",
+        textAlign: "center",
+      }}
+    >
+      {username[0].toUpperCase()}
+    </div>
+    <span
+      style={{
+        display: "inline-block",
+        marginLeft: "25px",
+      }}
+    >
+      {username}
+    </span>
+    <div
+      style={{
+        display: "flex",
+        marginTop: "15px",
+      }}
+    >
+      <textarea placeholder={`write message for ${username}`} />
+      <button>Send</button>
+    </div>
+  </li>
 );
 
 const ShowActiveConvo = ({ isActive, users, boards }) => {
@@ -55,10 +83,10 @@ export default function MessagesPage() {
 
   const users = data;
   const boards = [
-    {title: "general"},
-    {title: "building"},
-    {title: "fishermen"}
-  ]
+    { title: "general" },
+    { title: "building" },
+    { title: "fishermen" },
+  ];
   console.log(users);
   return (
     <>
@@ -87,39 +115,10 @@ export default function MessagesPage() {
               listStyle: "none",
             }}
           >
-            {users && users.map((user, i) => (
-              <li
-                style={{
-                  padding: "15px",
-                  margin: 0,
-                  border: "3px solid black",
-                }}
-                key={i}
-              >
-                <div
-                  style={{
-                    width: "25px",
-                    height: "25px",
-                    borderRadius: "50%",
-                    backgroundColor: "black",
-                    display: "inline-block",
-                    color: "white",
-                    textAlign: "center",
-                  }}
-                >
-                  {user.username[0].toUpperCase()}
-                </div>
-                <span
-                  style={{
-                    display: "inline-block",
-                    marginLeft: "25px",
-                  }}
-                >
-                  {user.username}
-                </span>
-                <UserChatProfile username={user.username} />
-              </li>
-            ))}
+            {users &&
+              users.map((user, i) => (
+                <UserChatProfile key={i} username={user.username} />
+              ))}
           </ul>
         </div>
         <div
@@ -166,7 +165,11 @@ export default function MessagesPage() {
                 backgroundColor: "yellow",
               }}
             >
-              <ShowActiveConvo isActive={isActive} users={users} boards={boards}/>
+              <ShowActiveConvo
+                isActive={isActive}
+                users={users}
+                boards={boards}
+              />
             </div>
           </div>
         </div>
