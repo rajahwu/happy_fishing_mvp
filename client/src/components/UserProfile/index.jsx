@@ -13,8 +13,8 @@ export default function UserProfile() {
   if (isLoading) return "Loading ...";
   if (error) return "An error has occurred: " + error.message;
 
-  const user = data[0];
-  console.log(user);
+  const user = data;
+  console.log("userone",user);
 
   return (
     <div style={{ display: "flex" }}>

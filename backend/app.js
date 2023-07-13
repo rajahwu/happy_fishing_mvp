@@ -18,11 +18,18 @@ const prisma = new client_1.PrismaClient();
 const app = (0, express_1.default)();
 const port = 8000;
 app.use(express_1.default.json());
+/**
+ * @category Test API
+ * @param route /api
+ * @returns Object {title: "home"}
+ */
 app.get('/api', (req, res) => {
     res.json({ title: "home" });
 });
 app.get('/api/test', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const user = yield prisma.user.findMany();
+    const user = yield prisma.user.findUnique({
+        where: { id: 1 }
+    });
     console.log('api/test');
     res.json(user);
 }));

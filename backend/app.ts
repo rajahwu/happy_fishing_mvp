@@ -6,13 +6,20 @@ const app: Express = express()
 const port: number = 8000
 
 app.use(express.json())
+/**
+ * @category Test API
+ * @param route /api
+ * @returns Object {title: "home"}
+ */
 
 app.get('/api', (req: Request, res: Response) => {
     res.json({ title: "home" })
 })
 
 app.get('/api/test', async (req: Request, res: Response) => {
-    const user = await prisma.user.findMany()
+    const user = await prisma.user.findUnique({
+        where: { id:1 }
+    })
     console.log('api/test')
     res.json(user)
 })

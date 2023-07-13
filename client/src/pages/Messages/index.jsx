@@ -2,43 +2,63 @@ import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
 import { useState } from "react";
 
-const Boards = () => <h1>Boards</h1>;
-
-const Chat = ({users}) => (
-<>
-<h1>Chat</h1>
-{users.map((user, i) => <div key={i}>{user.username}</div>)}
-</>
-);
-
-const UserChatProfile = ({ username }) => (
+const Boards = ({ boards }) => (
   <>
-    <h1>Message to {username}</h1>
-    <textarea />
-    <button>Send</button>
+    <h1>Boards</h1>
+    {boards.map((board, i) => (
+      <div key={i}>
+        <h1>{board.title}</h1>
+      </div>
+    ))}
   </>
 );
 
-const ShowActiveConvo = ({isActive, users}) => {
-   if(isActive === "boards") return <Boards />
-   if(isActive === "chat") return <Chat users={users} />
-  //  if(isActive === users) return <UserChatProfile  username={username}/>S
+const Chat = ({ users }) => (
+  <>
+    <h1>Chat</h1>
+    {users.map((user, i) => (
+      <div key={i}>{user.username}</div>
+    ))}
+  </>
+);
 
-}
+const UserChatProfile = ({ username }) => (
+  <div
+    style={{
+      display: "flex",
+      marginTop: "15px",
+    }}
+  >
+    {/* <p>Message to {username}</p> */}
+    <textarea placeholder={`write message for ${username}`} />
+    <button>Send</button>
+  </div>
+);
+
+const ShowActiveConvo = ({ isActive, users, boards }) => {
+  if (isActive === "boards") return <Boards boards={boards} />;
+  if (isActive === "chat") return <Chat users={users} />;
+  //  if(isActive === users) return <UserChatProfile  username={username}/>S
+};
 
 export default function MessagesPage() {
   const [isActive, setIsActive] = useState("boards");
   const { isLoading, error, data } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => fetch("/api/test").then((res) => res.json()),
+    queryKey: ["users"],
+    queryFn: () => fetch("/api/users").then((res) => res.json()),
     refetchOnWindowFocus: false,
-    staleTime: 300000
+    staleTime: 300000,
   });
 
   if (isLoading) return "Loading ...";
   if (error) return "An error has occurred: " + error.message;
 
   const users = data;
+  const boards = [
+    {title: "general"},
+    {title: "building"},
+    {title: "fishermen"}
+  ]
   console.log(users);
   return (
     <>
@@ -67,7 +87,7 @@ export default function MessagesPage() {
               listStyle: "none",
             }}
           >
-            {users.map((user, i) => (
+            {users && users.map((user, i) => (
               <li
                 style={{
                   padding: "15px",
@@ -97,6 +117,7 @@ export default function MessagesPage() {
                 >
                   {user.username}
                 </span>
+                <UserChatProfile username={user.username} />
               </li>
             ))}
           </ul>
@@ -145,7 +166,7 @@ export default function MessagesPage() {
                 backgroundColor: "yellow",
               }}
             >
-              <ShowActiveConvo isActive={isActive} users={users} />
+              <ShowActiveConvo isActive={isActive} users={users} boards={boards}/>
             </div>
           </div>
         </div>
