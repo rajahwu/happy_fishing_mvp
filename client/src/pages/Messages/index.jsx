@@ -1,72 +1,12 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQuery } from "react-query";
-import { useState } from "react";
-
-const Boards = ({ boards }) => (
-  <>
-    <h1>Boards</h1>
-    {boards.map((board, i) => (
-      <div key={i}>
-        <h1>{board.title}</h1>
-      </div>
-    ))}
-  </>
-);
-
-const Chat = ({ users }) => (
-  <>
-    <h1>Chat</h1>
-    {users.map((user, i) => (
-      <div key={i}>{user.username}</div>
-    ))}
-  </>
-);
-
-const UserChatProfile = ({ username }) => (
-  <li
-    style={{
-      padding: "15px",
-      margin: 0,
-      border: "3px solid black",
-    }}
-  >
-    <div
-      style={{
-        width: "25px",
-        height: "25px",
-        borderRadius: "50%",
-        backgroundColor: "black",
-        display: "inline-block",
-        color: "white",
-        textAlign: "center",
-      }}
-    >
-      {username[0].toUpperCase()}
-    </div>
-    <span
-      style={{
-        display: "inline-block",
-        marginLeft: "25px",
-      }}
-    >
-      {username}
-    </span>
-    <div
-      style={{
-        display: "flex",
-        marginTop: "15px",
-      }}
-    >
-      <textarea placeholder={`write message for ${username}`} />
-      <button>Send</button>
-    </div>
-  </li>
-);
+import { Boards, Chat, UserChatProfile } from "../../components/message";
 
 const ShowActiveConvo = ({ isActive, users, boards }) => {
   if (isActive === "boards") return <Boards boards={boards} />;
   if (isActive === "chat") return <Chat users={users} />;
-  //  if(isActive === users) return <UserChatProfile  username={username}/>S
+  //  if(isActive === users) return <UserChatProfile  username={username}/>
 };
 
 export default function MessagesPage() {
@@ -87,7 +27,7 @@ export default function MessagesPage() {
     { title: "building" },
     { title: "fishermen" },
   ];
-  console.log(users);
+
   return (
     <>
       <Link to="/">Home</Link>
